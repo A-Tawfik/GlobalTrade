@@ -8,7 +8,7 @@ class AddColumsToCars < ActiveRecord::Migration[5.0]
       t.time :sale_time
       t.string :time_zone
       t.integer :item_number
-      t.integer :lot_number
+      t.integer :lot_number, unique: true, null: false
       t.string :vehicle_type
       t.integer :year
       t.string :make

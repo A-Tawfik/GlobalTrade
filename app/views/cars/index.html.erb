@@ -1,0 +1,6 @@
+<h2>Import cars</h2>
+
+<%= form_tag import_cars_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
