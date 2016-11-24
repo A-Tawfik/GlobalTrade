@@ -42,8 +42,6 @@
 :grid-row
 :has_buy-it-now
 :buy-it-now_price
-
 :lot_url
-
 :state_of_ownership_doc_type
 :ownership_doc_type

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161123053406) do
+ActiveRecord::Schema.define(version: 20161123230147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,14 +18,11 @@ ActiveRecord::Schema.define(version: 20161123053406) do
   create_table "cars", force: :cascade do |t|
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.integer  "yard_number"
-    t.string   "yard_name"
-    t.date     "sale_date"
-    t.string   "day_of_week"
-    t.time     "sale_time"
-    t.string   "time_zone"
+    t.integer  "yard_number",                 null: false
+    t.string   "yard_name",                   null: false
+    t.datetime "sale_datetime"
     t.integer  "item_number"
-    t.integer  "lot_number"
+    t.integer  "lot_number",                  null: false
     t.string   "vehicle_type"
     t.integer  "year"
     t.string   "make"
@@ -65,6 +62,7 @@ ActiveRecord::Schema.define(version: 20161123053406) do
     t.string   "lot_url"
     t.string   "state_of_ownership_doc_type"
     t.string   "ownership_doc_type"
+    t.index ["lot_number"], name: "index_cars_on_lot_number", unique: true, using: :btree
   end
 
 end
