@@ -1,14 +1,11 @@
 class AddColumsToCars < ActiveRecord::Migration[5.0]
   def change
     change_table :cars do |t|
-      t.integer :yard_number
-      t.string :yard_name
-      t.date :sale_date
-      t.string :day_of_week
-      t.time :sale_time
-      t.string :time_zone
+      t.integer :yard_number, null: false
+      t.string :yard_name, null: false
+      t.column :sale_datetime, 'timestamp with time zone'
       t.integer :item_number
-      t.integer :lot_number, unique: true, null: false
+      t.integer :lot_number, null: false
       t.string :vehicle_type
       t.integer :year
       t.string :make

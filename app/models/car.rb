@@ -1,14 +1,20 @@
 require 'csv'
 class Car < ApplicationRecord
+  validates :lot_number, uniqueness: true
+
+
+
   def self.import(file)
+    binding.pry
+    size = file.tempfile.readlines.size
     ::CSV.foreach(file.tempfile, headers: true) do |row|
       new_car = Car.create!(
                 :yard_number =>  row["Yard number"].to_i,
                 :yard_name => row["Yard name"],
-                :sale_date => parse_date(row["Sale Date M/D/CY"]),
-                :day_of_week => row["Day of Week"],
-                :sale_time => parse_time(row["Sale time (HHMM)"]),
-                :time_zone => row["Time Zone"],
+                :sale_datetime => parse_datetime(row["Sale Date M/D/CY"],
+                                                 row["Day of Week"],
+                                                 row["Sale time (HHMM)"],
+                                                 row["Time Zone"]),
                 :item_number => row["Item#"].to_i,
                 :lot_number => row["Lot number"].to_i,
                 :vehicle_type => row["Vehicle Type"],
@@ -65,13 +71,29 @@ class Car < ApplicationRecord
   def self.update(car)
   end
 
-  def self.parse_time(time)
-    #return HH:MM = %H:%M
+  def self.parse_datetime(date, day, time, timezone)
+    ############################
+    ##TIME ZONES DONT SAVE!!!!##
+    ############################
+    case timezone
+      when "EST"
+        tz =  "Eastern Time (US & Canada)"
+      when "CST"
+        tz =  "Central Time (US & Canada)"
+      when "MST"
+        tz =  "Mountain Time (US & Canada)"
+      when "PST"
+        tz =  "Pacific Time (US & Canada)"
+      when "AST"
+        tz = "Alaska"
+      when "HST"
+        tz = "Hawaii"
+      else
+        tz =  "UTC"
+    end
     binding.pry
-  end
-
-  def self.parse_date(date)
-    #return YYYY/MM/DD = %F
+    return DateTime.parse(date + time.rjust(4, '0')).in_time_zone(tz) if date != 0
+    DateTime.new(2000,1,1,1,1)
   end
 
   def self.has_keys?(arg)
