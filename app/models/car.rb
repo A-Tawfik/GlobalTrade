@@ -5,16 +5,15 @@ class Car < ApplicationRecord
 
 
   def self.import(file)
-    binding.pry
+    # binding.pry
     size = file.tempfile.readlines.size
     ::CSV.foreach(file.tempfile, headers: true) do |row|
-      new_car = Car.create!(
+      new_car = Car.new(
                 :yard_number =>  row["Yard number"].to_i,
                 :yard_name => row["Yard name"],
                 :sale_datetime => parse_datetime(row["Sale Date M/D/CY"],
-                                                 row["Day of Week"],
-                                                 row["Sale time (HHMM)"],
-                                                 row["Time Zone"]),
+                                                 row["Sale time (HHMM)"]),
+                :time_zone => timezone(row["Time Zone"]),
                 :item_number => row["Item#"].to_i,
                 :lot_number => row["Lot number"].to_i,
                 :vehicle_type => row["Vehicle Type"],
@@ -57,7 +56,7 @@ class Car < ApplicationRecord
                 :state_of_ownership_doc_type => "" ,
                 :ownership_doc_type => ""
                 )
-                update(new_car)
+                new_car.save
     end
   # spreadsheet = open_spreadsheet(file)
   # header = spreadsheet.row(1)
@@ -71,10 +70,12 @@ class Car < ApplicationRecord
   def self.update(car)
   end
 
-  def self.parse_datetime(date, day, time, timezone)
-    ############################
-    ##TIME ZONES DONT SAVE!!!!##
-    ############################
+  def self.parse_datetime(date, time)
+    return DateTime.parse(date + time.rjust(4, '0')) if date != '0'
+    DateTime.new(2000,1,1,1,1)
+  end
+
+  def self.timezone(timezone)
     case timezone
       when "EST"
         tz =  "Eastern Time (US & Canada)"
@@ -91,9 +92,6 @@ class Car < ApplicationRecord
       else
         tz =  "UTC"
     end
-    binding.pry
-    return DateTime.parse(date + time.rjust(4, '0')).in_time_zone(tz) if date != 0
-    DateTime.new(2000,1,1,1,1)
   end
 
   def self.has_keys?(arg)

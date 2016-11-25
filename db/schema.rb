@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20161123230147) do
     t.integer  "yard_number",                 null: false
     t.string   "yard_name",                   null: false
     t.datetime "sale_datetime"
+    t.string   "time_zone"
     t.integer  "item_number"
     t.integer  "lot_number",                  null: false
     t.string   "vehicle_type"
