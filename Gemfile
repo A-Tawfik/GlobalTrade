@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'react-rails'
+
 gem 'roo'
 gem 'iconv'
 gem 'pry-rails'

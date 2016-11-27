@@ -58,21 +58,14 @@ class Car < ApplicationRecord
                 )
                 new_car.save
     end
-  # spreadsheet = open_spreadsheet(file)
-  # header = spreadsheet.row(1)
-  # (2..spreadsheet.last_row).each do |i|
-  #   row = Hash[[header, spreadsheet.row(i)].transpose]
-  #   car = find_by_id(row["id"]) || new
-  #   car.attributes = row.to_hash.slice(*accessible_attributes)
-  #   car.save!
-  # end
   end
-  def self.update(car)
+  def update
+    
   end
 
   def self.parse_datetime(date, time)
     return DateTime.parse(date + time.rjust(4, '0')) if date != '0'
-    DateTime.new(2000,1,1,1,1)
+    nil
   end
 
   def self.timezone(timezone)
