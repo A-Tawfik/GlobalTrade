@@ -4,3 +4,14 @@
   <%= file_field_tag :file %>
   <%= submit_tag "Import" %>
 <% end %>
+
+<% if @cars.length > 0 %>
+  <div class="car-list">
+    <%=  react_component 'Listing', {cars: @cars} %>
+  </div>
+
+
+
+
+
+<% end %>
