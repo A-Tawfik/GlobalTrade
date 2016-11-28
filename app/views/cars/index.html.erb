@@ -6,17 +6,8 @@
 <% end %>
 
 <% if @cars.length > 0 %>
-
   <div class="car-list">
-    <div class="header row">
-      
-    </div>
-    <% @cars[0..49].each_with_index do |car, i| %>
-
-      <div class="car row <%= i.even? ? "even" : "odd"%>">
-        <img alt="<%= car.lot_number %>" src="http://<%= car.image_thumbnail %>"/>
-      </div>
-    <% end %>
+    <%=  react_component 'Listing', {cars: @cars} %>
   </div>
 
 
