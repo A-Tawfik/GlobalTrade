@@ -1,17 +1,12 @@
 <h2>Import cars</h2>
 
 <%= form_tag import_cars_path, multipart: true do %>
-  <%= file_field_tag :file %>
+  <%= text_field_tag :query %>
   <%= submit_tag "Import" %>
 <% end %>
-
+  <p> <%= @count %> of <%= @cars.count %> </p>
 <% if @cars.length > 0 %>
   <div class="car-list">
     <%=  react_component 'Listing', {cars: @cars} %>
   </div>
-
-
-
-
-
 <% end %>
